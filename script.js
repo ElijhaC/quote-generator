@@ -9,20 +9,22 @@ let apiQuotes = [];
 
 //Show loading
 function loading(){
-    
+    loader.hidden = false;
     quoteContainer.hidden = true;
     
 }
 
 //Hide loading
 function complete(){
-    quoteContainer.hidden = false;
-    loader.hidden = true;
+    if(!loader.hidden){
+      quoteContainer.hidden = false;
+      loader.hidden = true;
+    }
 }
 
 //Show new Quote
 function newQuote(){
-    loading();
+    //loading();
     // Pick a random quote from apiQuotes array
     const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)];
      // check if author feild is blank
@@ -39,17 +41,18 @@ function newQuote(){
     }
     //Set Quote, Hide Loader
    quoteText.textContent = quote.text;
-   complete();
+   //complete();
 }
 
 // GEt Quotes From API
 async function getQuotes() {
-    loading();
+   // loading();
     const apiUrl = 'https://jacintodesign.github.io/quotes-api/data/quotes.json';
     try {
         const response = await fetch(apiUrl);
         apiQuotes = await response.json();
         newQuote();
+        
     } catch (error) {
       //Catch Error Here  
     }
